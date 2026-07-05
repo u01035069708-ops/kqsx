@@ -1231,3 +1231,100 @@ body.light-theme .icon-btn:hover {
 .pred-board-wrapper .val-highlight {
   font-size: 1.25rem;
 }
+
+/* ==========================================
+   MOBILE & TABLET RESPONSIVENESS
+   ========================================== */
+@media (max-width: 600px) {
+  /* Lottery main table adjustments to fit small viewports */
+  .lottery-table td {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+  .prize-label {
+    width: 90px;
+    font-size: 0.78rem;
+    padding: 10px 6px;
+  }
+  .prize-value {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  .val-highlight {
+    font-size: 1.3rem !important;
+  }
+  
+  /* Loto split table layout (stack on mobile) */
+  .loto-split-grid {
+    grid-template-columns: 1fr;
+  }
+  .loto-table-wrapper:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  /* Simulator slots adjustment */
+  .sim-slots-group {
+    gap: 10px;
+  }
+  .simulator-table .sim-slot {
+    min-width: 60px;
+    font-size: 1.05rem;
+  }
+
+  /* Header scaling */
+  .logo-text {
+    font-size: 1.3rem;
+  }
+  .logo-tagline {
+    font-size: 0.7rem;
+  }
+  .live-indicator {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+  
+  /* Form adjustments */
+  .fengshui-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fengshui-form .select-year,
+  .fengshui-form .select-gender,
+  .fengshui-form .btn {
+    width: 100%;
+  }
+
+  /* Bubble container alignment */
+  .number-bubbles {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Panel headers styling */
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .panel-header .select-wrapper {
+    width: 100%;
+  }
+  .panel-header select {
+    width: 100%;
+  }
+  
+  /* Grid padding */
+  .prob-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+  }
+  .prob-cell {
+    padding: 8px;
+  }
+  .prob-num {
+    font-size: 1.2rem;
+  }
+}
+
