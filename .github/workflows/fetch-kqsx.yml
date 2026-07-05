@@ -1,0 +1,43 @@
+name: Tự động cập nhật kết quả xổ số
+
+on:
+  schedule:
+    # Chạy mỗi 10 phút trong khung giờ mở thưởng 18h00 - 19h00 giờ VN (11h00 - 12h00 UTC)
+    - cron: '*/10 11-12 * * *'
+    # Chạy mỗi 2 giờ trong các khoảng thời gian còn lại để đảm bảo đồng bộ
+    - cron: '0 */2 * * *'
+  workflow_dispatch: # Cho phép nhấn nút chạy thủ công trên GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Fetch and parse lottery RSS feed
+      run: node scripts/fetch-rss.js
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add data/kqsx.json
+        if git diff --staged --quiet; then
+          echo "Không có thay đổi dữ liệu kết quả xổ số."
+        else
+          git commit -m "chore(data): tự động cập nhật kết quả xổ số"
+          git push
+        fi

@@ -187,16 +187,54 @@ async function fetchLotteryData() {
     resultsLoading.classList.remove('hidden');
     resultsDisplay.classList.add('hidden');
 
-    const rssUrl = 'https://kqxs.net.vn/rss-feed/xo-so-mien-bac-xsmb-xstd.rss';
-    // Use AllOrigins proxy to bypass CORS
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
-    
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error("CORS Proxy Network response error");
-    const xml = await response.text();
+    let parsedResults = [];
 
-    const parsedResults = parseRSS(xml);
-    if (parsedResults.length > 0) {
+    // Step 1: Attempt to load the pre-fetched JSON file directly (very fast, no CORS issue)
+    try {
+      const jsonResponse = await fetch('./data/kqsx.json');
+      if (jsonResponse.ok) {
+        parsedResults = await jsonResponse.json();
+        console.log("Loaded lottery data successfully from local JSON.");
+      } else {
+        throw new Error("Local JSON file not found or status not OK");
+      }
+    } catch (jsonErr) {
+      console.warn("Could not load local data/kqsx.json, falling back to CORS proxies:", jsonErr);
+    }
+
+    // Step 2: Fallback to direct RSS fetch using a list of CORS proxies
+    if (!parsedResults || parsedResults.length === 0) {
+      const rssUrl = 'https://kqxs.net.vn/rss-feed/xo-so-mien-bac-xsmb-xstd.rss';
+      const CORS_PROXIES = [
+        url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+        url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+      ];
+
+      let xml = null;
+      for (const getProxyUrl of CORS_PROXIES) {
+        try {
+          const proxyUrl = getProxyUrl(rssUrl);
+          console.log(`Trying CORS proxy: ${proxyUrl}`);
+          const response = await fetch(proxyUrl);
+          if (response.ok) {
+            const text = await response.text();
+            if (text && text.includes('<item>')) {
+              xml = text;
+              break;
+            }
+          }
+        } catch (proxyErr) {
+          console.warn("Proxy attempt failed:", proxyErr);
+        }
+      }
+
+      if (xml) {
+        parsedResults = parseRSS(xml);
+      }
+    }
+
+    if (parsedResults && parsedResults.length > 0) {
       const stats = calculateStatsAndPredictions(parsedResults);
       globalResultsData = {
         success: true,
@@ -213,10 +251,10 @@ async function fetchLotteryData() {
       resultsLoading.classList.add('hidden');
       resultsDisplay.classList.remove('hidden');
     } else {
-      throw new Error("Empty items parsed");
+      throw new Error("No lottery data could be fetched from local JSON or live RSS.");
     }
   } catch (error) {
-    console.error("Error fetching live RSS feed, loading fallback mock data:", error);
+    console.error("Error fetching lottery data, loading fallback mock data:", error);
     loadFallbackMockData();
   }
 }
