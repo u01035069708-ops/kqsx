@@ -841,7 +841,7 @@ function resetSimulatorBoard() {
   });
 }
 
-function spinSlotAnim(elementId, digitCount, duration) {
+function spinSlotAnim(elementId, digitCount, duration, targetValue) {
   return new Promise((resolve) => {
     const el = document.getElementById(elementId);
     el.classList.add('simulating');
@@ -857,13 +857,8 @@ function spinSlotAnim(elementId, digitCount, duration) {
     setTimeout(() => {
       clearInterval(interval);
       el.classList.remove('simulating');
-      
-      let finalVal = '';
-      for (let i = 0; i < digitCount; i++) {
-        finalVal += Math.floor(Math.random() * 10);
-      }
-      el.innerText = finalVal;
-      resolve(finalVal);
+      el.innerText = targetValue;
+      resolve(targetValue);
     }, duration);
   });
 }
@@ -878,9 +873,50 @@ async function startLotterySimulation() {
 
   resetSimulatorBoard();
 
+  if (!globalResultsData || !globalResultsData.stats || !globalResultsData.stats.predictions || !globalResultsData.stats.predictions.predictedBoard) {
+    alert("Dữ liệu dự toán chưa sẵn sàng để quay thử!");
+    isSimulating = false;
+    spinBtn.disabled = false;
+    spinBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Bắt đầu quay thử';
+    return;
+  }
+
+  const board = globalResultsData.stats.predictions.predictedBoard;
+
+  const slotValueMap = {
+    'sim-db': board.db[0],
+    'sim-g1': board.g1[0],
+    'sim-g2-0': board.g2[0],
+    'sim-g2-1': board.g2[1],
+    'sim-g3-0': board.g3[0],
+    'sim-g3-1': board.g3[1],
+    'sim-g3-2': board.g3[2],
+    'sim-g3-3': board.g3[3],
+    'sim-g3-4': board.g3[4],
+    'sim-g3-5': board.g3[5],
+    'sim-g4-0': board.g4[0],
+    'sim-g4-1': board.g4[1],
+    'sim-g4-2': board.g4[2],
+    'sim-g4-3': board.g4[3],
+    'sim-g5-0': board.g5[0],
+    'sim-g5-1': board.g5[1],
+    'sim-g5-2': board.g5[2],
+    'sim-g5-3': board.g5[3],
+    'sim-g5-4': board.g5[4],
+    'sim-g5-5': board.g5[5],
+    'sim-g6-0': board.g6[0],
+    'sim-g6-1': board.g6[1],
+    'sim-g6-2': board.g6[2],
+    'sim-g7-0': board.g7[0],
+    'sim-g7-1': board.g7[1],
+    'sim-g7-2': board.g7[2],
+    'sim-g7-3': board.g7[3]
+  };
+
   for (let i = 0; i < simSlots.length; i++) {
     const slot = simSlots[i];
-    await spinSlotAnim(slot.id, slot.digits, 400);
+    const targetVal = slotValueMap[slot.id] || '-'.repeat(slot.digits);
+    await spinSlotAnim(slot.id, slot.digits, 400, targetVal);
   }
 
   const dbEl = document.getElementById('sim-db');
