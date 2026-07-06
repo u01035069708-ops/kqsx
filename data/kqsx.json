@@ -1,7 +1,58 @@
 [
   {
+    "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 06/07 (Thứ Hai)",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
+    "dateDisplay": "06/07 (Thứ Hai)",
+    "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-6-7-2026/",
+    "prizes": {
+      "db": [
+        "43497"
+      ],
+      "g1": [
+        "95103"
+      ],
+      "g2": [
+        "29328",
+        "79523"
+      ],
+      "g3": [
+        "68679",
+        "66934",
+        "67183",
+        "82777",
+        "47332",
+        "71370"
+      ],
+      "g4": [
+        "7755",
+        "7395",
+        "7104",
+        "2429"
+      ],
+      "g5": [
+        "4686",
+        "6183",
+        "1236",
+        "1832",
+        "1799",
+        "1915"
+      ],
+      "g6": [
+        "671",
+        "856",
+        "356"
+      ],
+      "g7": [
+        "30",
+        "55",
+        "89",
+        "20"
+      ]
+    }
+  },
+  {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 05/07 (Chủ Nhật)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
     "dateDisplay": "05/07 (Chủ Nhật)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-5-7-2026/",
     "prizes": {
@@ -52,7 +103,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 04/07 (Thứ Bảy)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
     "dateDisplay": "04/07 (Thứ Bảy)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-4-7-2026/",
     "prizes": {
@@ -103,7 +154,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 03/07 (Thứ Sáu)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
     "dateDisplay": "03/07 (Thứ Sáu)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-3-7-2026/",
     "prizes": {
@@ -154,7 +205,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 02/07 (Thứ Năm)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
     "dateDisplay": "02/07 (Thứ Năm)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-2-7-2026/",
     "prizes": {
@@ -205,7 +256,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 01/07 (Thứ Tư)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
+    "pubDate": "Mon, 06 Jul 2026 19:28:05 GMT",
     "dateDisplay": "01/07 (Thứ Tư)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-1-7-2026/",
     "prizes": {
@@ -251,57 +302,6 @@
         "07",
         "35",
         "80"
-      ]
-    }
-  },
-  {
-    "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 30/06 (Thứ Ba)",
-    "pubDate": "Mon, 06 Jul 2026 04:37:38 GMT",
-    "dateDisplay": "30/06 (Thứ Ba)",
-    "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-30-6-2026/",
-    "prizes": {
-      "db": [
-        "60468"
-      ],
-      "g1": [
-        "31651"
-      ],
-      "g2": [
-        "71173",
-        "80230"
-      ],
-      "g3": [
-        "59780",
-        "20731",
-        "01625",
-        "23203",
-        "02640",
-        "30168"
-      ],
-      "g4": [
-        "1992",
-        "5360",
-        "0537",
-        "8142"
-      ],
-      "g5": [
-        "3932",
-        "1982",
-        "4526",
-        "9295",
-        "8417",
-        "6527"
-      ],
-      "g6": [
-        "359",
-        "277",
-        "412"
-      ],
-      "g7": [
-        "33",
-        "90",
-        "97",
-        "12"
       ]
     }
   }
