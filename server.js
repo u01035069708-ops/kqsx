@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // Cache configuration
 let cachedData = null;
@@ -19,24 +19,58 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 // Mock data in case the external website is down or rate-limited
 const mockData = [
   {
-    title: "Kết quả xổ số Miền Bắc (Hà Nội) ngày 05/07/2026 (Chủ Nhật)",
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 05/07 (Chủ Nhật)",
     pubDate: "05/07/2026",
-    link: "https://xosodaiphat.com/xsmb-05-07-2026.html",
+    dateDisplay: "05/07 (Chủ Nhật)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-5-7-2026/",
     prizes: {
-      db: ["84620"],
-      g1: ["39572"],
-      g2: ["72615", "83940"],
-      g3: ["12039", "85621", "49301", "72648", "91023", "38472"],
-      g4: ["7482", "9103", "8472", "6391"],
-      g5: ["8472", "9102", "3847", "1290", "7483", "9201"],
-      g6: ["738", "920", "182"],
-      g7: ["84", "92", "10", "47"]
+      db: ["66771"],
+      g1: ["64531"],
+      g2: ["53751", "62057"],
+      g3: ["22964", "18198", "37503", "11113", "09823", "04737"],
+      g4: ["9277", "9799", "6109", "0123"],
+      g5: ["0604", "9280", "2063", "1981", "9947", "0517"],
+      g6: ["990", "376", "186"],
+      g7: ["99", "35", "03", "86"]
     }
   },
   {
-    title: "Kết quả xổ số Miền Bắc (Hà Nội) ngày 02/07/2026 (Thứ 5)",
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 04/07 (Thứ Bảy)",
+    pubDate: "04/07/2026",
+    dateDisplay: "04/07 (Thứ Bảy)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-4-7-2026/",
+    prizes: {
+      db: ["14887"],
+      g1: ["34848"],
+      g2: ["01608", "69074"],
+      g3: ["70279", "94314", "00627", "79420", "61802", "22704"],
+      g4: ["2687", "6160", "7283", "5179"],
+      g5: ["1327", "6447", "6008", "1845", "8606", "7255"],
+      g6: ["678", "637", "222"],
+      g7: ["73", "54", "87", "91"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 03/07 (Thứ Sáu)",
+    pubDate: "03/07/2026",
+    dateDisplay: "03/07 (Thứ Sáu)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-3-7-2026/",
+    prizes: {
+      db: ["18165"],
+      g1: ["26965"],
+      g2: ["12215", "36248"],
+      g3: ["64733", "85281", "24897", "21858", "21724", "74653"],
+      g4: ["3919", "1651", "4954", "7252"],
+      g5: ["2921", "9715", "3310", "9232", "2561", "9734"],
+      g6: ["844", "218", "771"],
+      g7: ["90", "68", "92", "13"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 02/07 (Thứ Năm)",
     pubDate: "02/07/2026",
-    link: "https://xosodaiphat.com/xsmb-02-07-2026.html",
+    dateDisplay: "02/07 (Thứ Năm)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-2-7-2026/",
     prizes: {
       db: ["51139"],
       g1: ["53733"],
@@ -49,9 +83,42 @@ const mockData = [
     }
   },
   {
-    title: "Kết quả xổ số Miền Bắc (Hà Nội) ngày 29/06/2026 (Thứ 2)",
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 01/07 (Thứ Tư)",
+    pubDate: "01/07/2026",
+    dateDisplay: "01/07 (Thứ Tư)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-1-7-2026/",
+    prizes: {
+      db: ["31854"],
+      g1: ["28354"],
+      g2: ["12465", "72384"],
+      g3: ["32906", "04292", "63731", "65959", "51261", "35224"],
+      g4: ["6100", "2989", "3278", "6536"],
+      g5: ["7660", "3350", "5711", "7836", "2034", "1179"],
+      g6: ["131", "832", "553"],
+      g7: ["91", "07", "35", "80"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 30/06 (Thứ Ba)",
+    pubDate: "30/06/2026",
+    dateDisplay: "30/06 (Thứ Ba)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-30-6-2026/",
+    prizes: {
+      db: ["72948"],
+      g1: ["83921"],
+      g2: ["91823", "02912"],
+      g3: ["73821", "90182", "38219", "01928", "82910", "47291"],
+      g4: ["7382", "9102", "3829", "0192"],
+      g5: ["8392", "0192", "3829", "7281", "9102", "3829"],
+      g6: ["738", "910", "281"],
+      g7: ["83", "91", "02", "29"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 29/06 (Thứ Hai)",
     pubDate: "29/06/2026",
-    link: "https://xosodaiphat.com/xsmb-29-06-2026.html",
+    dateDisplay: "29/06 (Thứ Hai)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-29-6-2026/",
     prizes: {
       db: ["37642"],
       g1: ["47110"],
@@ -410,10 +477,137 @@ function predictPrizeSlot(historyArray, length) {
   return predicted;
 }
 
+// Calculate predictions history for the last 7 draws
+function calculatePredictionsHistory(results) {
+  if (!results || results.length === 0) return [];
+  
+  const history = [];
+  // Calculate predictions for up to 7 recent draws (excluding the oldest ones that have no history)
+  const daysToCalculate = Math.min(7, results.length);
+  
+  for (let i = 0; i < daysToCalculate; i++) {
+    const currentDraw = results[i];
+    const historicalDraws = results.slice(i + 1);
+    
+    if (historicalDraws.length > 0) {
+      const stats = calculateStatsAndPredictions(historicalDraws);
+      const pred = stats.predictions;
+      
+      const lotoList = [];
+      Object.values(currentDraw.prizes).forEach(prizeArray => {
+        prizeArray.forEach(num => {
+          if (num.length >= 2) {
+            lotoList.push(num.substring(num.length - 2));
+          }
+        });
+      });
+      const de = currentDraw.prizes.db[0] ? currentDraw.prizes.db[0].substring(currentDraw.prizes.db[0].length - 2) : '';
+      
+      const bachThuHit = lotoList.includes(pred.bachThu);
+      const songThuHits = pred.songThu.filter(num => lotoList.includes(num));
+      const danDe10Hit = pred.danDe10.includes(de);
+      const danDe36Hit = pred.danDe36.includes(de);
+      
+      history.push({
+        date: currentDraw.dateDisplay || currentDraw.pubDate,
+        dateTitle: currentDraw.title,
+        actual: {
+          db: currentDraw.prizes.db[0] || '',
+          de: de,
+          lotos: lotoList
+        },
+        predicted: {
+          bachThu: pred.bachThu,
+          songThu: pred.songThu,
+          danDe10: pred.danDe10,
+          danDe36: pred.danDe36
+        },
+        evaluation: {
+          bachThuHit,
+          songThuHitsCount: songThuHits.length,
+          songThuHits: songThuHits,
+          danDe10Hit,
+          danDe36Hit
+        }
+      });
+    }
+  }
+  return history;
+}
+
+// Merge new draws with existing draws in kqsx.json, remove duplicates, keep top 7
+function mergeAndSaveResults(newResults) {
+  if (!newResults || newResults.length === 0) return [];
+
+  const dataDir = path.join(__dirname, 'data');
+  const kqsxPath = path.join(dataDir, 'kqsx.json');
+
+  let existingResults = [];
+  try {
+    if (fs.existsSync(kqsxPath)) {
+      existingResults = JSON.parse(fs.readFileSync(kqsxPath, 'utf8'));
+    }
+  } catch (err) {
+    console.error("Error reading existing kqsx.json for merge:", err.message);
+  }
+
+  // Combine both arrays
+  const combined = [...newResults, ...existingResults];
+
+  // Filter out duplicates based on title/date
+  const uniqueMap = new Map();
+  combined.forEach(item => {
+    const key = item.dateDisplay || item.title;
+    if (key && !uniqueMap.has(key)) {
+      uniqueMap.set(key, item);
+    }
+  });
+
+  // Convert back to array
+  let mergedResults = Array.from(uniqueMap.values());
+
+  // Sort them chronologically descending
+  mergedResults.sort((a, b) => {
+    const dateA = new Date(a.pubDate || 0);
+    const dateB = new Date(b.pubDate || 0);
+    
+    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+      const getYearPart = (item) => {
+        const match = item.title.match(/(\d{1,2})\/(\d{1,2})/);
+        if (match) {
+          return new Date(2026, parseInt(match[2]) - 1, parseInt(match[1])).getTime();
+        }
+        return 0;
+      };
+      return getYearPart(b) - getYearPart(a);
+    }
+    return dateB - dateA;
+  });
+
+  // Limit to 7 items
+  const finalResults = mergedResults.slice(0, 7);
+
+  // Ensure dataDir exists
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+
+  // Save to kqsx.json
+  fs.writeFileSync(kqsxPath, JSON.stringify(finalResults, null, 2), 'utf8');
+  console.log(`Saved ${finalResults.length} unique results to ${kqsxPath}`);
+
+  return finalResults;
+}
+
 // Route to fetch and process lottery data
 app.get('/api/results', async (req, res) => {
   const now = Date.now();
-  if (cachedData && (now - lastFetchTime < CACHE_DURATION)) {
+  
+  // Cache linh hoạt: 1 phút trong giờ quay thưởng (18:00 - 19:00 VN), bình thường 5 phút
+  const vnHour = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })).getHours();
+  const activeCacheDuration = (vnHour === 18) ? (1 * 60 * 1000) : CACHE_DURATION;
+
+  if (cachedData && (now - lastFetchTime < activeCacheDuration)) {
     return res.json(cachedData);
   }
 
@@ -428,11 +622,25 @@ app.get('/api/results', async (req, res) => {
     const parsedResults = parseRSS(response.data);
     
     if (parsedResults.length > 0) {
-      const stats = calculateStatsAndPredictions(parsedResults);
+      const mergedResults = mergeAndSaveResults(parsedResults);
+      const stats = calculateStatsAndPredictions(mergedResults);
+      
+      // Save predictions history
+      try {
+        const history = calculatePredictionsHistory(mergedResults);
+        const dataDir = path.join(__dirname, 'data');
+        if (!fs.existsSync(dataDir)) {
+          fs.mkdirSync(dataDir, { recursive: true });
+        }
+        fs.writeFileSync(path.join(dataDir, 'predictions.json'), JSON.stringify(history, null, 2), 'utf8');
+      } catch (err) {
+        console.error("Error saving predictions history:", err.message);
+      }
+
       cachedData = {
         success: true,
         source: 'live',
-        results: parsedResults,
+        results: mergedResults,
         stats
       };
       lastFetchTime = now;
@@ -454,14 +662,46 @@ app.get('/api/results', async (req, res) => {
       }
     });
 
-    const stats = calculateStatsAndPredictions(mockData);
+    const mergedResults = mergeAndSaveResults(mockData) || mockData;
+    const stats = calculateStatsAndPredictions(mergedResults);
+
+    // Save predictions history for mock
+    try {
+      const history = calculatePredictionsHistory(mergedResults);
+      const dataDir = path.join(__dirname, 'data');
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(dataDir, 'predictions.json'), JSON.stringify(history, null, 2), 'utf8');
+    } catch (err) {
+      console.error("Error saving fallback predictions history:", err.message);
+    }
+
     return res.json({
       success: true,
       source: 'mock_fallback',
-      results: mockData,
+      results: mergedResults,
       stats
     });
   }
+});
+
+// Route to get prediction history of the last 7 days
+app.get('/api/predictions-history', (req, res) => {
+  const predictionsPath = path.join(__dirname, 'data', 'predictions.json');
+  try {
+    if (fs.existsSync(predictionsPath)) {
+      const data = fs.readFileSync(predictionsPath, 'utf8');
+      return res.json(JSON.parse(data));
+    }
+  } catch (e) {
+    console.error("Error reading predictions history:", e);
+  }
+  
+  // Dynamic fallback calculation
+  const results = (cachedData && cachedData.results) ? cachedData.results : mockData;
+  const history = calculatePredictionsHistory(results);
+  res.json(history);
 });
 
 // Load Dream dictionary
@@ -492,6 +732,50 @@ app.get('/api/dreams', (req, res) => {
   
   res.json(matches);
 });
+
+// Background auto-fetch task during draw hours (18:00 - 19:00 VN time)
+// Runs every 2 minutes. Pulls and updates kqsx.json, predictions.json and cachedData.
+setInterval(async () => {
+  const vnHour = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })).getHours();
+  if (vnHour !== 18) return;
+
+  console.log("Auto-fetching RSS feed during drawing hour (18:00 - 19:00)...");
+  try {
+    const response = await axios.get('https://kqxs.net.vn/rss-feed/xo-so-mien-bac-xsmb-xstd.rss', {
+      timeout: 10000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
+
+    const parsedResults = parseRSS(response.data);
+    if (parsedResults.length > 0) {
+      const dataDir = path.join(__dirname, 'data');
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+      
+      // Update local files using merge
+      const mergedResults = mergeAndSaveResults(parsedResults);
+      
+      const history = calculatePredictionsHistory(mergedResults);
+      fs.writeFileSync(path.join(dataDir, 'predictions.json'), JSON.stringify(history, null, 2), 'utf8');
+      
+      // Update cache
+      const stats = calculateStatsAndPredictions(mergedResults);
+      cachedData = {
+        success: true,
+        source: 'live',
+        results: mergedResults,
+        stats
+      };
+      lastFetchTime = Date.now();
+      console.log("Auto-fetch completed successfully. Data cache updated.");
+    }
+  } catch (err) {
+    console.error("Auto-fetch failed during drawing hour:", err.message);
+  }
+}, 2 * 60 * 1000); // 2 minutes interval
 
 // Start Server
 app.listen(PORT, () => {

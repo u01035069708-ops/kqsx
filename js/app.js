@@ -11,6 +11,22 @@ const resultsDisplay = document.getElementById('results-display');
 // Mock data in case the external website is down or rate-limited
 const mockData = [
   {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 05/07 (Chủ Nhật)",
+    pubDate: "05/07/2026",
+    dateDisplay: "05/07 (Chủ Nhật)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-5-7-2026/",
+    prizes: {
+      db: ["66771"],
+      g1: ["64531"],
+      g2: ["53751", "62057"],
+      g3: ["22964", "18198", "37503", "11113", "09823", "04737"],
+      g4: ["9277", "9799", "6109", "0123"],
+      g5: ["0604", "9280", "2063", "1981", "9947", "0517"],
+      g6: ["990", "376", "186"],
+      g7: ["99", "35", "03", "86"]
+    }
+  },
+  {
     title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 04/07 (Thứ Bảy)",
     pubDate: "04/07/2026",
     dateDisplay: "04/07 (Thứ Bảy)",
@@ -56,6 +72,54 @@ const mockData = [
       g5: ["4973", "7396", "1950", "2740", "1419", "5208"],
       g6: ["559", "824", "270"],
       g7: ["59", "78", "33", "70"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 01/07 (Thứ Tư)",
+    pubDate: "01/07/2026",
+    dateDisplay: "01/07 (Thứ Tư)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-1-7-2026/",
+    prizes: {
+      db: ["31854"],
+      g1: ["28354"],
+      g2: ["12465", "72384"],
+      g3: ["32906", "04292", "63731", "65959", "51261", "35224"],
+      g4: ["6100", "2989", "3278", "6536"],
+      g5: ["7660", "3350", "5711", "7836", "2034", "1179"],
+      g6: ["131", "832", "553"],
+      g7: ["91", "07", "35", "80"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 30/06 (Thứ Ba)",
+    pubDate: "30/06/2026",
+    dateDisplay: "30/06 (Thứ Ba)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-30-6-2026/",
+    prizes: {
+      db: ["72948"],
+      g1: ["83921"],
+      g2: ["91823", "02912"],
+      g3: ["73821", "90182", "38219", "01928", "82910", "47291"],
+      g4: ["7382", "9102", "3829", "0192"],
+      g5: ["8392", "0192", "3829", "7281", "9102", "3829"],
+      g6: ["738", "910", "281"],
+      g7: ["83", "91", "02", "29"]
+    }
+  },
+  {
+    title: "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 29/06 (Thứ Hai)",
+    pubDate: "29/06/2026",
+    dateDisplay: "29/06 (Thứ Hai)",
+    link: "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-29-6-2026/",
+    prizes: {
+      db: ["37642"],
+      g1: ["47110"],
+      g2: ["81418", "41783"],
+      g3: ["28815", "70574", "27729", "66429", "04690", "34208"],
+      g4: ["3076", "9255", "1860", "8838"],
+      g5: ["5877", "1562", "7701", "6084", "7290", "1945"],
+      g6: ["244", "631", "879"],
+      g7: ["94", "08", "93", "70"]
     }
   }
 ];
@@ -247,6 +311,7 @@ async function fetchLotteryData() {
       renderStatistics(stats);
       renderPredictions(stats);
       renderProbabilities(stats.probabilities);
+      loadAndRenderPredictionsHistory(parsedResults);
 
       resultsLoading.classList.add('hidden');
       resultsDisplay.classList.remove('hidden');
@@ -282,6 +347,7 @@ function loadFallbackMockData() {
   renderStatistics(stats);
   renderPredictions(stats);
   renderProbabilities(stats.probabilities);
+  loadAndRenderPredictionsHistory(mockData);
 
   resultsLoading.classList.add('hidden');
   resultsDisplay.classList.remove('hidden');
@@ -765,6 +831,207 @@ function renderPredictions(stats) {
     bubble.textContent = num;
     dan36Container.appendChild(bubble);
   });
+}
+
+// Calculate predictions history for the last 7 draws
+function calculatePredictionsHistory(results) {
+  if (!results || results.length === 0) return [];
+  
+  const history = [];
+  const daysToCalculate = Math.min(7, results.length);
+  
+  for (let i = 0; i < daysToCalculate; i++) {
+    const currentDraw = results[i];
+    const historicalDraws = results.slice(i + 1);
+    
+    if (historicalDraws.length > 0) {
+      const stats = calculateStatsAndPredictions(historicalDraws);
+      const pred = stats.predictions;
+      
+      const lotoList = [];
+      Object.values(currentDraw.prizes).forEach(prizeArray => {
+        prizeArray.forEach(num => {
+          if (num.length >= 2) {
+            lotoList.push(num.substring(num.length - 2));
+          }
+        });
+      });
+      const de = currentDraw.prizes.db[0] ? currentDraw.prizes.db[0].substring(currentDraw.prizes.db[0].length - 2) : '';
+      
+      const bachThuHit = lotoList.includes(pred.bachThu);
+      const songThuHits = pred.songThu.filter(num => lotoList.includes(num));
+      const danDe10Hit = pred.danDe10.includes(de);
+      const danDe36Hit = pred.danDe36.includes(de);
+      
+      history.push({
+        date: currentDraw.dateDisplay || currentDraw.pubDate,
+        dateTitle: currentDraw.title,
+        actual: {
+          db: currentDraw.prizes.db[0] || '',
+          de: de,
+          lotos: lotoList
+        },
+        predicted: {
+          bachThu: pred.bachThu,
+          songThu: pred.songThu,
+          danDe10: pred.danDe10,
+          danDe36: pred.danDe36
+        },
+        evaluation: {
+          bachThuHit,
+          songThuHitsCount: songThuHits.length,
+          songThuHits: songThuHits,
+          danDe10Hit,
+          danDe36Hit
+        }
+      });
+    }
+  }
+  return history;
+}
+
+async function loadAndRenderPredictionsHistory(results) {
+  const tbody = document.getElementById('prediction-history-tbody');
+  if (!tbody) return;
+
+  let historyData = null;
+
+  try {
+    const response = await fetch('/api/predictions-history');
+    if (response.ok) {
+      historyData = await response.json();
+    } else {
+      const fileResponse = await fetch('./data/predictions.json');
+      if (fileResponse.ok) {
+        historyData = await fileResponse.json();
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch pre-calculated prediction history, calculating client-side:", err);
+  }
+
+  if (!historyData || historyData.length === 0) {
+    historyData = calculatePredictionsHistory(results);
+  }
+
+  renderPredictionsHistory(historyData);
+}
+
+function renderPredictionsHistory(historyData) {
+  const tbody = document.getElementById('prediction-history-tbody');
+  const winRateContainer = document.getElementById('win-rate-stats');
+  if (!tbody) return;
+
+  tbody.innerHTML = '';
+
+  if (!historyData || historyData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Không có dữ liệu lịch sử dự đoán.</td></tr>`;
+    if (winRateContainer) winRateContainer.innerHTML = '';
+    return;
+  }
+
+  let totalDays = historyData.length;
+  let bachThuHits = 0;
+  let songThuDaysHits = 0;
+  let songThuTotalHits = 0;
+  let danDe10Hits = 0;
+  let danDe36Hits = 0;
+
+  historyData.forEach(item => {
+    const tr = document.createElement('tr');
+
+    const tdDate = document.createElement('td');
+    tdDate.className = 'history-date-cell';
+    tdDate.innerHTML = `
+      <div class="hist-date-main">${item.date}</div>
+      <div class="hist-db-result">Đặc Biệt: <span class="db-highlight">${item.actual.db}</span></div>
+    `;
+    tr.appendChild(tdDate);
+
+    const tdBachThu = document.createElement('td');
+    const btHit = item.evaluation.bachThuHit;
+    if (btHit) bachThuHits++;
+    tdBachThu.innerHTML = `
+      <div class="hist-num-val">${item.predicted.bachThu}</div>
+      <span class="badge ${btHit ? 'badge-hit' : 'badge-miss'}">${btHit ? '<i class="fa-solid fa-circle-check"></i> Trúng' : 'Trượt'}</span>
+    `;
+    tr.appendChild(tdBachThu);
+
+    const tdSongThu = document.createElement('td');
+    const stHitsCount = item.evaluation.songThuHitsCount;
+    if (stHitsCount > 0) songThuDaysHits++;
+    songThuTotalHits += stHitsCount;
+    tdSongThu.innerHTML = `
+      <div class="hist-num-val">${item.predicted.songThu.join(' - ')}</div>
+      <span class="badge ${stHitsCount > 0 ? 'badge-hit' : 'badge-miss'}">
+        ${stHitsCount > 0 ? `<i class="fa-solid fa-circle-check"></i> Trúng ${stHitsCount} nháy` : 'Trượt'}
+      </span>
+    `;
+    tr.appendChild(tdSongThu);
+
+    const tdDan10 = document.createElement('td');
+    const dan10Hit = item.evaluation.danDe10Hit;
+    if (dan10Hit) danDe10Hits++;
+    
+    const dan10List = item.predicted.danDe10.map(n => 
+      n === item.actual.de ? `<strong class="text-gold">${n}</strong>` : n
+    ).join(', ');
+
+    tdDan10.innerHTML = `
+      <div class="hist-list-val">${dan10List}</div>
+      <span class="badge ${dan10Hit ? 'badge-hit-de' : 'badge-miss'}">${dan10Hit ? '<i class="fa-solid fa-crown text-gold"></i> Trúng Đề' : 'Trượt'}</span>
+    `;
+    tr.appendChild(tdDan10);
+
+    const tdDan36 = document.createElement('td');
+    const dan36Hit = item.evaluation.danDe36Hit;
+    if (dan36Hit) danDe36Hits++;
+    
+    const dan36List = item.predicted.danDe36.map(n => 
+      n === item.actual.de ? `<strong class="text-gold">${n}</strong>` : n
+    ).join(', ');
+
+    tdDan36.innerHTML = `
+      <div class="hist-list-val collapse-list" onclick="this.classList.toggle('expand')">${dan36List}</div>
+      <span class="badge ${dan36Hit ? 'badge-hit-de' : 'badge-miss'}">${dan36Hit ? '<i class="fa-solid fa-crown text-gold"></i> Trúng Đề' : 'Trượt'}</span>
+    `;
+    tr.appendChild(tdDan36);
+
+    tbody.appendChild(tr);
+  });
+
+  const btPercent = Math.round((bachThuHits / totalDays) * 100);
+  const stPercent = Math.round((songThuDaysHits / totalDays) * 100);
+  const de10Percent = Math.round((danDe10Hits / totalDays) * 100);
+  const de36Percent = Math.round((danDe36Hits / totalDays) * 100);
+
+  if (winRateContainer) {
+    winRateContainer.innerHTML = `
+      <div class="win-rate-title"><i class="fa-solid fa-chart-line text-gold"></i> Tỷ Lệ Trúng Thống Kê (7 Kỳ Gần Nhất)</div>
+      <div class="win-rate-grid">
+        <div class="win-rate-item glow-gold">
+          <div class="wr-label">BẠCH THỦ LÔ</div>
+          <div class="wr-value">${btPercent}%</div>
+          <div class="wr-sub">${bachThuHits}/${totalDays} ngày trúng</div>
+        </div>
+        <div class="win-rate-item glow-purple">
+          <div class="wr-label">SONG THỦ LÔ</div>
+          <div class="wr-value">${stPercent}%</div>
+          <div class="wr-sub">${songThuDaysHits}/${totalDays} ngày trúng (${songThuTotalHits} nháy)</div>
+        </div>
+        <div class="win-rate-item glow-blue">
+          <div class="wr-label">DÀN ĐỀ VIP 10S</div>
+          <div class="wr-value">${de10Percent}%</div>
+          <div class="wr-sub">${danDe10Hits}/${totalDays} ngày trúng</div>
+        </div>
+        <div class="win-rate-item glow-green">
+          <div class="wr-label">DÀN ĐỀ 36S</div>
+          <div class="wr-value">${de36Percent}%</div>
+          <div class="wr-sub">${danDe36Hits}/${totalDays} ngày trúng</div>
+        </div>
+      </div>
+    `;
+  }
 }
 
 // --------------------------------------------------

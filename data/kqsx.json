@@ -17,7 +17,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 04/07 (Thứ Bảy)",
-    "pubDate": "Sun, 05 Jul 2026 19:22:55 GMT",
+    "pubDate": "Sat, 04 Jul 2026 19:22:55 GMT",
     "dateDisplay": "04/07 (Thứ Bảy)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-4-7-2026/",
     "prizes": {
@@ -33,7 +33,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 03/07 (Thứ Sáu)",
-    "pubDate": "Sun, 05 Jul 2026 19:22:55 GMT",
+    "pubDate": "Fri, 03 Jul 2026 19:22:55 GMT",
     "dateDisplay": "03/07 (Thứ Sáu)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-3-7-2026/",
     "prizes": {
@@ -49,7 +49,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 02/07 (Thứ Năm)",
-    "pubDate": "Sun, 05 Jul 2026 19:22:55 GMT",
+    "pubDate": "Thu, 02 Jul 2026 19:22:55 GMT",
     "dateDisplay": "02/07 (Thứ Năm)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-2-7-2026/",
     "prizes": {
@@ -65,7 +65,7 @@
   },
   {
     "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 01/07 (Thứ Tư)",
-    "pubDate": "Sun, 05 Jul 2026 19:22:55 GMT",
+    "pubDate": "Wed, 01 Jul 2026 19:22:55 GMT",
     "dateDisplay": "01/07 (Thứ Tư)",
     "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-1-7-2026/",
     "prizes": {
@@ -77,6 +77,38 @@
       "g5": ["7660", "3350", "5711", "7836", "2034", "1179"],
       "g6": ["131", "832", "553"],
       "g7": ["91", "07", "35", "80"]
+    }
+  },
+  {
+    "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 30/06 (Thứ Ba)",
+    "pubDate": "Tue, 30 Jun 2026 19:22:55 GMT",
+    "dateDisplay": "30/06 (Thứ Ba)",
+    "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-30-6-2026/",
+    "prizes": {
+      "db": ["72948"],
+      "g1": ["83921"],
+      "g2": ["91823", "02912"],
+      "g3": ["73821", "90182", "38219", "01928", "82910", "47291"],
+      "g4": ["7382", "9102", "3829", "0192"],
+      "g5": ["8392", "0192", "3829", "7281", "9102", "3829"],
+      "g6": ["738", "910", "281"],
+      "g7": ["83", "91", "02", "29"]
+    }
+  },
+  {
+    "title": "KẾT QUẢ XỔ SỐ MIỀN BẮC NGÀY 29/06 (Thứ Hai)",
+    "pubDate": "Mon, 29 Jun 2026 19:22:55 GMT",
+    "dateDisplay": "29/06 (Thứ Hai)",
+    "link": "https://kqxs.net.vn/xo-so-ngay/mien-bac-xsmb-29-6-2026/",
+    "prizes": {
+      "db": ["37642"],
+      "g1": ["47110"],
+      "g2": ["81418", "41783"],
+      "g3": ["28815", "70574", "27729", "66429", "04690", "34208"],
+      "g4": ["3076", "9255", "1860", "8838"],
+      "g5": ["5877", "1562", "7701", "6084", "7290", "1945"],
+      "g6": ["244", "631", "879"],
+      "g7": ["94", "08", "93", "70"]
     }
   }
 ]
